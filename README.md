@@ -1,3 +1,3 @@
-      -------Part 1--------   -------Part 2--------
-Day       Time  Rank  Score       Time  Rank  Score
-  1   00:05:48  2425      0   00:11:10  3088      0
+| Day | Part 1 Time | Part 1 Rank | Part 1 Score | Part 1 Solution                                                                                 | Part 2 Time | Part 2 Rank | Part 2 Score | Part 2 Solution                                                                                 |
+|-----|-------------|-------------|--------------|--------------------------------------------------------------------------------------------------|-------------|-------------|--------------|--------------------------------------------------------------------------------------------------|
+|  1  | 00:05:48    | 2425        | 0            | [part1.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day1/part1.py)             | 00:11:10    | 3088        | 0            | [part2.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day1/part2.py)             |
