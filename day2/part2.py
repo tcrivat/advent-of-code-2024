@@ -16,8 +16,7 @@ def solve(line):
     if safe(levels):
        return 1
     for i in range(len(levels)):
-        new_levels = levels[:]
-        del new_levels[i]
+        new_levels = levels[:i] + levels[i+1:]
         if safe(new_levels):
            return 1
     return 0
