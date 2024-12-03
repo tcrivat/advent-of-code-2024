@@ -9,10 +9,7 @@ def solution(filename):
             l2.append(n2)
     l1.sort()
     l2.sort()
-    answer = 0
-    for n1, n2 in zip(l1, l2):
-        answer += abs(n1 - n2)
-    return answer
+    return sum(abs(n1 - n2) for n1, n2 in zip(l1, l2))
 
 if __name__ == "__main__":
     print(solution(INPUT_FILE))
