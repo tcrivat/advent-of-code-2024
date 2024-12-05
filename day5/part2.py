@@ -3,7 +3,7 @@ from collections import defaultdict
 INPUT_FILE = "input.txt"
 
 def solution(filename):
-    successors = defaultdict(set)
+    successors = defaultdict(list)
     
     def solve(line):
         pages = list(map(int, line.split(",")))
@@ -26,9 +26,9 @@ def solution(filename):
         for line in f:
             if not line.strip():
                 break
-            n1, n2 = map(int, line.split("|"))
-            successors[n1].add(n2) 
+            p1, p2 = map(int, line.split("|"))
+            successors[p1].append(p2) 
         return sum(solve(line) for line in f)
-    
+
 if __name__ == "__main__":
     print(solution(INPUT_FILE))
