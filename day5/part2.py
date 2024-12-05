@@ -3,7 +3,7 @@ from collections import defaultdict
 INPUT_FILE = "input.txt"
 
 def solution(filename):
-    succ = defaultdict(set)
+    successors = defaultdict(set)
     
     def solve(line):
         pages = list(map(int, line.split(",")))
@@ -12,10 +12,11 @@ def solution(filename):
         incorrect = False
         for page in pages:
             remaining.remove(page)
-            relevant_succ = succ[page].intersection(relevant)
-            out_of_order = relevant_succ.difference(remaining)
+            out_of_order = {succ for succ in successors[page]
+                if succ in relevant and succ not in remaining}
             if out_of_order:
-                pos = min(pages.index(p) for p in out_of_order)
+                pos = min(i for i, p in enumerate(pages)
+                    if p in out_of_order)
                 pages.remove(page)
                 pages.insert(pos, page)
                 incorrect = True
@@ -26,7 +27,7 @@ def solution(filename):
             if not line.strip():
                 break
             n1, n2 = map(int, line.split("|"))
-            succ[n1].add(n2) 
+            successors[n1].add(n2) 
         return sum(solve(line) for line in f)
     
 if __name__ == "__main__":
