@@ -47,10 +47,10 @@ def solution(filename):
                     nonlocal obstructions
                     obstructions += 1
             
-            # if (next_i, next_j) is a wall, turn
+            # if (next_i, next_j) is a wall, turn right
             if on_map(next_i, next_j) and matrix[next_i][next_j] == "#":
                 di, dj = turn_right(di, dj)
-            else: # else advance
+            else: # else advance in the same direction
                 i = next_i
                 j = next_j
     

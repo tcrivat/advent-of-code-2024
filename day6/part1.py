@@ -21,20 +21,15 @@ def solution(filename):
         return 0 <= i < n and 0 <= j < m
     
     def walk(i, j, di, dj, visited):
-        while True:
-            if not on_map(i, j):
-                return False # out of the map
-            if (i, j, di, dj) in visited:
-                return True # walk in circles
-            
-            visited.add((i, j, di, dj))
+        while on_map(i, j):
+            visited.add((i, j))
             next_i = i + di
             next_j = j + dj
             
-            # if (next_i, next_j) is a wall, turn
+            # if (next_i, next_j) is a wall, turn right
             if on_map(next_i, next_j) and matrix[next_i][next_j] == "#":
                 di, dj = turn_right(di, dj)
-            else: # else advance
+            else: # else advance in the same direction
                 i = next_i
                 j = next_j
     
@@ -45,8 +40,7 @@ def solution(filename):
     start_i, start_j = find_start()
     visited = set()
     walk(start_i, start_j, -1, 0, visited) # walk up from start
-    positions = len({(i, j) for (i, j, _, _) in visited})
-    return positions
+    return len(visited)
 
 if __name__ == "__main__":
     print(solution(INPUT_FILE))
