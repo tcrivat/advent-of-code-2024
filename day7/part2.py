@@ -1,3 +1,5 @@
+import operator
+
 INPUT_FILE = "input.txt"
 
 def solution(filename):
@@ -5,12 +7,15 @@ def solution(filename):
         test_value, numbers = line.split(": ")
         test_value = int(test_value)
         numbers = list(map(int, numbers.split()))
+        operators = [operator.add,
+                     operator.mul,
+                     lambda x, y: int(str(x) + str(y))]
         
         possible = {numbers[0]} # set
         for i in range(1, len(numbers)):
-            possible = ({n + numbers[i] for n in possible} |
-                        {n * numbers[i] for n in possible} |
-                        {int(str(n) + str(numbers[i])) for n in possible})
+            possible = {r for n in possible
+                          for op in operators
+                          if (r := op(n, numbers[i])) <= test_value}
         
         return test_value if test_value in possible else 0
         
