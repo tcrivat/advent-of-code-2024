@@ -20,9 +20,7 @@ def evolve(stone, generation):
 
 def solution(filename):
     with open(filename) as f:
-        for line in f:
-            stones = line.split()
-            break
+        stones = f.readline().split()
     return sum(evolve(stone, 75) for stone in stones)
 
 if __name__ == "__main__":
