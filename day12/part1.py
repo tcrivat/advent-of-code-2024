@@ -6,10 +6,8 @@ def solution(filename):
                 matrix[i][j] == value and visited[i][j] == -1):
             return
         visited[i][j] = region
-        for di in [-1, 0, 1]:
-            for dj in [-1, 0, 1]:
-                if di and not dj or not di and dj:
-                    visit(i + di, j + dj, value, region)
+        for di, dj in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
+            visit(i + di, j + dj, value, region)
     
     def identify_regions():
         regions = 0
@@ -27,16 +25,11 @@ def solution(filename):
             for j in range(m):
                 region = visited[i][j]
                 area[region] += 1
-                for di in [-1, 0, 1]:
-                    for dj in [-1, 0, 1]:
-                        if di and not dj or not di and dj:
-                            if 0 <= i + di < n and 0 <= j + dj < m:
-                                if matrix[i + di][j + dj] != matrix[i][j]:
-                                    # neighbor of different type
-                                    perimeter[region] += 1
-                            else:
-                                # edge of the map
-                                perimeter[region] += 1
+                for di, dj in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
+                    if (not (0 <= i + di < n and 0 <= j + dj < m)
+                            or matrix[i + di][j + dj] != matrix[i][j]):
+                        # edge of the map or neighbor of different type
+                        perimeter[region] += 1
         return area, perimeter
     
     with open(filename) as f:
