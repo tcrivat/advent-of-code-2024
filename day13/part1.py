@@ -8,11 +8,10 @@ def parse_line(line):
     return x, y
 
 def parse_machine(button_a, button_b, prize):
-    claw_machine = {}
-    claw_machine["ax"], claw_machine["ay"] = parse_line(button_a)
-    claw_machine["bx"], claw_machine["by"] = parse_line(button_b)
-    claw_machine["x"], claw_machine["y"] = parse_line(prize)
-    return claw_machine
+    ax, ay = parse_line(button_a)
+    bx, by = parse_line(button_b)
+    x, y = parse_line(prize)
+    return ax, ay, bx, by, x, y
 
 def solve(ax, ay, bx, by, x, y):
     n1 = by * x - bx * y
@@ -37,7 +36,7 @@ def solution(filename):
             if not (prize := f.readline()):
                 break
             f.readline()
-            answer += solve(**parse_machine(button_a, button_b, prize))
+            answer += solve(*parse_machine(button_a, button_b, prize))
     return answer
 
 if __name__ == "__main__":
