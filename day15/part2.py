@@ -1,41 +1,24 @@
 INPUT_FILE = "input.txt"
 
 def solution(filename):
+    def read_input(filename):
+        with open(filename) as f:
+            while line := f.readline().strip():
+                twice = {"#" : ["#", "#"], "." : [".", "."],
+                         "O" : ["[", "]"], "@" : ["@", "."]}
+                row = sum(map(lambda x: twice[x], line), [])
+                matrix.append(row)
+            while line := f.readline().strip():
+                convert = {"^" : (-1, 0), "<" : (0, -1),
+                           ">" : ( 0, 1), "v" : (1,  0)}
+                moves.extend(map(lambda x: convert[x], line))
+    
     def find_start():
         for i in range(n):
             for j in range(m):
                 if matrix[i][j] == "@":
                     return i, j
     
-    def update(line):
-        updated = []
-        for c in line:
-            match c:
-                case "#":
-                    updated.append("#")
-                    updated.append("#")
-                case "O":
-                    updated.append("[")
-                    updated.append("]")
-                case ".":
-                    updated.append(".")
-                    updated.append(".")
-                case "@":
-                    updated.append("@")
-                    updated.append(".")
-        return updated
-    
-    def convert(move):
-        match move:
-            case "^":
-                return -1, 0
-            case "<":
-                return 0, -1
-            case ">":
-                return 0, 1
-            case "v":
-                return 1, 0
-
     def can_push(x, y, dx, dy):
         if matrix[x + dx][y + dy] == "#":
             return False
@@ -62,7 +45,7 @@ def solution(filename):
                 push(x + dx, y - 1, dx, dy)
         matrix[x + dx][y + dy] = matrix[x][y]
         matrix[x][y] = "."
-
+    
     def move_robot(x, y, dx, dy):
         if can_push(x, y, dx, dy):
             push(x, y, dx, dy)
@@ -77,7 +60,7 @@ def solution(filename):
                 if matrix[i][j] == "[":
                     answer += 100 * i + j
         return answer
-
+    
     def print_map():
         for i in range(n):
             for j in range(m):
@@ -86,17 +69,12 @@ def solution(filename):
     
     matrix = []
     moves = []
-    with open(filename) as f:
-        while line := f.readline().strip():
-            matrix.append(update(line))
-        while line := f.readline().strip():
-            moves.append(line)
-        moves = "".join(moves)
+    read_input(filename)
     n = len(matrix)
     m = len(matrix[0])
     x, y = find_start()
-    for move in moves:
-        x, y = move_robot(x, y, *convert(move))
+    for direction in moves:
+        x, y = move_robot(x, y, *direction)
     # print_map()
     return sum_coordinates()
 
