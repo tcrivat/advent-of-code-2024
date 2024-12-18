@@ -10,7 +10,7 @@ computed from the most significant 6 bits, and so on.
 time. We first try all the possible values for the first three bits and
 choose a combination that outputs the last value correctly. To check
 the program's output for a certain value of A, we run the program until
-it outputs the first value. If it's not correct, we continue searching
+it outputs a value. If it's not correct, we continue searching
 for another value. If it's correct, we can move to the next three bits
 and choose a combination that outputs the previous before the last value
 correctly. And so on.
@@ -18,7 +18,7 @@ correctly. And so on.
 (no value can match the output at a certain level), we then backtrack
 and try another combination at the lower level. So the search is
 implemented using a recursive backtracking algorithm.
-    As there are only 8 possible value for each group of 3 bits and
+    As there are only 8 possible values for each group of 3 bits and
 at most 16 levels (groups of 3 bits), and also very few of the
 combinations could lead to solutions, the algorithm (even if it has
 exponential complexity 3^16), finishes very fast (tens of milliseconds).
