@@ -14,15 +14,13 @@ def solution(filename):
         dp[0] = 1
         for i in range(1, n + 1):
             for m in range(1, min(i, max_length) + 1):
-                h = hash(design[i - m : i])
-                if (h in hashes):
+                if (design[i - m : i] in patterns):
                     dp[i] += dp[i - m]
         return dp[n]
     
     with open(filename) as f:
-        patterns = f.readline().strip().split(", ")
+        patterns = set(f.readline().strip().split(", "))
         max_length = max(len(p) for p in patterns)
-        hashes = set(hash(p) for p in patterns)
         f.readline()
         return sum(is_possible(line.strip()) for line in f)
 
