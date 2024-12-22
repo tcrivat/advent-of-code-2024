@@ -1,3 +1,14 @@
+"""
+    I keep a dictionary with every 4 length sequence of changes
+encountered so far. To quickly determine the last 4 changes, I 
+keep them in a bounded queue (max length = 4).
+    For each sequence of changes, I store the sum of bananas that
+could be bought. As I need to take into account only the first
+occurence of a sequence of 4 for a certain number, I also keep a
+set with all sequences that were already encountered for the
+current number and ignore all seqences already in the set.
+    The answer is the maximum value in the dictionary.
+"""
 from collections import deque, defaultdict
 
 INPUT_FILE = "input.txt"

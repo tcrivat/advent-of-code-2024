@@ -1,3 +1,9 @@
+"""
+    An alternative way of transforming the number:
+- shift 6 bits to the left, keep the last 24 bits and XOR with the previous value
+- shift 5 bits to the right and XOR with the previous value
+- shift 11 bits to the left, keep the last 24 bits and XOR with the previous value
+"""
 INPUT_FILE = "input.txt"
 ITERATIONS = 2000
 LAST_24_BITS = (1 << 24) - 1
