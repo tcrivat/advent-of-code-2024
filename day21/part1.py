@@ -1,3 +1,19 @@
+"""
+    When moving from a key to another key, you can use at most two types of moves:
+up(^)/down(v) and left(<)/right(>). For example from key 3 to key 7, you need to
+use <<^^A or ^^<<A (<^<^A is surely inefficient).
+    This is the correct order: left(<), up(^), down(v), right(>) - the same order
+in which keys are present on the keypad! For example: left(<) always comes before
+up(^) or right(>).
+    You should NOT hover on top of the missing key of the keyboard! This constraint
+changes the order above for some edge cases:
+    For keypad 1:
+    - from the last line to the first column, you put ^ before <
+    - from the first column to the last line, you put > before v
+    For keypad 2:
+    - from the first line to the first column, you put v before <
+    - from the first column to the first line, you put > before ^
+"""
 INPUT_FILE = "input.txt"
 
 KEYPAD1 = {"7": (0, 0), "8": (0, 1), "9": (0, 2),

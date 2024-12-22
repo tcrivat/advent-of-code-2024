@@ -1,3 +1,14 @@
+"""
+    Now we have to do 25 iterations, instead of 2. A code that is expanded 25
+times will lead to an array that is way too long. No way this can be brute forced!
+    We need to split the sequence in multiple parts and process each part
+independently, for example process each character by itself.
+    I wrote a function that processes a sequence for a specified number of
+iterations. This splits the sequence into characters and further processes each
+character (recursively!), for the reminder of the iterations.
+    As the function is called with the same arguments repeatidly, its results
+can me memoized.
+"""
 INPUT_FILE = "input.txt"
 
 KEYPAD1 = {"7": (0, 0), "8": (0, 1), "9": (0, 2),
