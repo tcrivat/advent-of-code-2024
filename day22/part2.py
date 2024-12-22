@@ -1,3 +1,5 @@
+from collections import deque, defaultdict
+
 INPUT_FILE = "input.txt"
 ITERATIONS = 2000
 
@@ -8,50 +10,35 @@ def solution(filename):
         else:
             return x >> -n
     
-    def process_input(initial_secret):
-        new_prices = []
-        new_changes = []
-        secret = initial_secret
-        for _ in range(ITERATIONS):
-            prev = secret
+    def process_input(secret):
+        last4 = deque()
+        visited = set()
+        for i in range(ITERATIONS):
+            prev_price = secret % 10
+            
             secret ^= shift(secret, 6)
             secret ^= shift(secret, -5)
             secret ^= shift(secret, 11)
-            new_prices.append(secret % 10)
-            new_changes.append(chr(ord("a") + secret % 10 - prev % 10 + 9))
-        prices.append("".join(map(str, new_prices)))
-        changes.append("".join(new_changes))
+            
+            price = secret % 10
+            change = price - prev_price
+            last4.append(change)
+            
+            if i < 3:
+                continue
+            elif i > 3:
+                last4.popleft()
+            
+            if (seq := tuple(last4)) in visited:
+                continue
+            visited.add(seq)
+            bananas[seq] += price
     
-    def get_best_sequences():
-        frequencies = {}
-        for i in range(n):
-            for j in range(3, ITERATIONS):
-                last4 = changes[i][j - 3 : j + 1]
-                if last4 not in frequencies:
-                    frequencies[last4] = 0
-                frequencies[last4] += 1
-        sequences = [(frequencies[seq], seq) for seq in frequencies]
-        sequences.sort(reverse=True)
-        return sequences[:50] # use only the 50 most frequent sequences
-    
-    def solve():
-        max_bananas = 0
-        for _, s in sequences:
-            bananas = 0
-            for i in range(n):
-                if (p := changes[i].find(s)) != -1:
-                    bananas += int(prices[i][p + 3])
-            max_bananas = max(bananas, max_bananas)
-        return max_bananas
-    
-    prices = []
-    changes = []
+    bananas = defaultdict(int)
     with open(filename) as f:
         for line in f:
             process_input(int(line.strip()))
-    n = len(changes)
-    sequences = get_best_sequences()
-    return solve()
+    return max(bananas.values())
 
 if __name__ == "__main__":
     print(solution(INPUT_FILE))
