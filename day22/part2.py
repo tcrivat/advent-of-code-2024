@@ -2,37 +2,31 @@ from collections import deque, defaultdict
 
 INPUT_FILE = "input.txt"
 ITERATIONS = 2000
+LAST_24_BITS = (1 << 24) - 1
 
 def solution(filename):
-    def shift(x, n):
-        if n > 0:
-            return (x << n) & ((1 << 24) - 1)
-        else:
-            return x >> -n
-    
     def process_input(secret):
-        last4 = deque()
         visited = set()
+        last4 = deque(maxlen=4)
+        prev_price = secret % 10
+        
         for i in range(ITERATIONS):
-            prev_price = secret % 10
-            
-            secret ^= shift(secret, 6)
-            secret ^= shift(secret, -5)
-            secret ^= shift(secret, 11)
+            secret ^= (secret << 6) & LAST_24_BITS
+            secret ^= (secret >> 5) & LAST_24_BITS
+            secret ^= (secret << 11) & LAST_24_BITS
             
             price = secret % 10
             change = price - prev_price
+            prev_price = price
             last4.append(change)
             
-            if i < 3:
+            if len(last4) < 4:
                 continue
-            elif i > 3:
-                last4.popleft()
             
-            if (seq := tuple(last4)) in visited:
-                continue
-            visited.add(seq)
-            bananas[seq] += price
+            seq = tuple(last4)
+            if seq not in visited:
+                visited.add(seq)
+                bananas[seq] += price
     
     bananas = defaultdict(int)
     with open(filename) as f:

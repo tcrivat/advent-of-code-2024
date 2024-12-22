@@ -1,19 +1,13 @@
 INPUT_FILE = "input.txt"
 ITERATIONS = 2000
+LAST_24_BITS = (1 << 24) - 1
 
 def solution(filename):
-    def shift(x, n):
-        if n > 0:
-            return (x << n) & ((1 << 24) - 1)
-        else:
-            return x >> -n
-    
-    def solve(initial_secret):
-        secret = initial_secret
+    def solve(secret):
         for _ in range(ITERATIONS):
-            secret ^= shift(secret, 6)
-            secret ^= shift(secret, -5)
-            secret ^= shift(secret, 11)
+            secret ^= (secret << 6) & LAST_24_BITS
+            secret ^= (secret >> 5) & LAST_24_BITS
+            secret ^= (secret << 11) & LAST_24_BITS
         return secret
     
     with open(filename) as f:
