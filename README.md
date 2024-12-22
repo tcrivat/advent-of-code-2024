@@ -20,5 +20,6 @@
 | 18  |  00:24:54   |  2926       | [part1.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day18/part1.py)            |  01:26:40   |  5465       | [part2.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day18/part2.py)            |
 | 19  |  00:58:34   |  5104       | [part1.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day19/part1.py)            |  01:07:29   |  4120       | [part2.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day19/part2.py)            |
 | 21  |  01:44:33   |  1296       | [part1.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day21/part1.py)            |  03:16:47   |  1346       | [part2.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day21/part2.py)            |
+| 22  |  00:16:03   |  2394       | [part1.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day22/part1.py)            |  01:09:27   |  2549       | [part2.py](https://github.com/tcrivat/advent-of-code-2024/blob/main/day22/part2.py)            |
 
 times marked with * are self-measured from the moment I opened the problem's statement, a few days after it was published
