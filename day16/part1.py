@@ -9,7 +9,7 @@ and a direction. A node has 3 neighbors:
     - the tile in front, same direction, cost 1
     - the same tile, direction 90 deg. to the right, cost 1000
     - the same tile, direction 90 deg. to the left, cost 1000
-    After running the algorithm, we have 4 node associated with the
+    After running the algorithm, we have 4 nodes associated with the
 end tile, each with possibly different scores. We return the
 minimum of these scores.
 """
