@@ -20,9 +20,11 @@ DIRECTIONS = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
 def solution(filename):
     def read_input():
+        matrix = []
         with open(filename) as f:
             while line := f.readline().strip():
-                matrix.append(list(line))
+                matrix.append(line)
+        return matrix
     
     def find_position(symbol):
         for i in range(n):
@@ -38,40 +40,36 @@ def solution(filename):
     
     def get_neighbors(node):
         dist, coord, dir = node
-        neighbors = []
         next = (coord[0] + dir[0], coord[1] + dir[1])
-        neighbors.append((dist + 1, next, dir))
+        if (0 <= next[0] < n and # on map
+                0 <= next[1] < m and
+                matrix[next[0]][next[1]] != "#"): # not wall
+            yield (dist + 1, next, dir)
         for new_dir in turn(dir):
-            neighbors.append((dist + 1000, coord, new_dir))
-        return neighbors
+            yield (dist + 1000, coord, new_dir)
     
     def solve_dijkstra(start, start_dir):
         distances[(start, start_dir)] = 0
         priority_queue = [(0, start, start_dir)]
         heapify(priority_queue)
-
+        
         while priority_queue:
             node = heappop(priority_queue)
             for dist, coord, dir in get_neighbors(node):
-                if (0 <= coord[0] < n and # on map
-                        0 <= coord[1] < m and
-                        matrix[coord[0]][coord[1]] != "#" and # not wall
-                        ((coord, dir) not in distances or # better distance
-                         dist < distances[(coord, dir)])): 
+                if (dist < distances.get((coord, dir), dist + 1)): 
+                    if coord == end:
+                        return dist
                     distances[(coord, dir)] = dist
                     heappush(priority_queue, (dist, coord, dir))
     
-    matrix = []
-    read_input()
+    matrix = read_input()
     n = len(matrix)
     m = len(matrix[0])
     start = find_position("S")
     end = find_position("E")
     
     distances = {}
-    solve_dijkstra(start, (0, 1)) # EAST
-    return min(distances[(end, dir)]
-               for dir in DIRECTIONS)
+    return solve_dijkstra(start, (0, 1)) # EAST
 
 if __name__ == "__main__":
     print(solution(INPUT_FILE))
